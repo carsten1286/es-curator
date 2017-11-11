@@ -1,0 +1,17 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: curator
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: curator
+            image: shanelee007/es-curator:5.3
+            envFrom:
+            - configMapRef:
+                name: curator-config
+          restartPolicy: OnFailure
